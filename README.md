@@ -20,4 +20,5 @@ Web application built in [Common Lisp](https://lisp-lang.org/)
     ```bash
     (clw::start-server)
     ```
-    Starting the web server on [localhost:8899](http://localhost:8899)
+
+Starting the web server on [localhost:8899](http://localhost:8899)
