@@ -17,7 +17,8 @@ Web application built in [Common Lisp](https://lisp-lang.org/)
     ```
 
 # Usage
-    ```bash
+
+    ```shell
     (clw::start-server)
     ```
 
