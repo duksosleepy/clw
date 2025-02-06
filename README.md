@@ -1,7 +1,7 @@
-** Clw
+# Clw
 Web application built in [Common Lisp](https://lisp-lang.org/)
 
-** Installation
+# Installation
 ### With SBCL (ASDF) (recommended)
 1. Load .asd
     ```bash
@@ -16,7 +16,7 @@ Web application built in [Common Lisp](https://lisp-lang.org/)
     (find-package :clw)
     ```
 
-** Usage
+# Usage
     ```bash
     (clw::start-server)
     ```
