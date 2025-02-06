@@ -1,5 +1,6 @@
 (uiop:define-package clw
-  (:use #:cl))
+  (:use #:cl)
+  (:export :start-server))
 (in-package #:clw)
 
 (defvar *server* nil
