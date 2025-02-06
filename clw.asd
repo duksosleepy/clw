@@ -9,7 +9,7 @@
                         :components
                         ((:file "main"))))
   :description "CLW"
-  :in-order-to ((test-op (test-op "clw/tests"))))
+  :in-order-to ((asdf:test-op (asdf:test-op "clw/tests"))))
 
 (ASDF:defsystem "clw/tests"
   :author ""
@@ -20,4 +20,4 @@
                         :components
                         ((:file "main"))))
   :description "Test system for clw"
-  :perform (test-op (op c) (symbol-call :rove :run c)))
+  :perform (asdf:test-op (op c) (funcall (find-symbol "RUN" :rove) c)))
