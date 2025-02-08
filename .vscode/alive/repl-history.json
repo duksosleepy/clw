@@ -1,1 +1,1 @@
-[]
+[{"pkgName":"cl-user","text":"(hunchentoot:stop *server*)"},{"pkgName":"cl-user","text":"(clw::start-server)"},{"pkgName":"cl-user","text":"djula:render-template*"},{"pkgName":"cl-user","text":"djula:compile-string"},{"pkgName":"cl-user","text":"(asdf:load-system \"clw\")"},{"pkgName":"cl-user","text":"(load \"clw.asd\")"},{"pkgName":"cl-user","text":"load"}]

@@ -1,11 +1,23 @@
-(defpackage clw/tests/main
-  (:use :cl
-        :clw
-        :rove))
-(in-package :clw/tests/main)
+(ASDF:defsystem "clw"
+  :version "0.0.1"
+  :author ""
+  :license ""
+  :depends-on (:hunchentoot
+               :easy-routes
+               :djula)
+  :components ((:module "src"
+                        :components
+                        ((:file "main"))))
+  :description "CLW"
+  :in-order-to ((asdf:test-op (asdf:test-op "clw/tests"))))
 
-;; NOTE: To run this test file, execute `(asdf:test-system :clw)' in your Lisp.
-
-(deftest test-target-1
-         (testing "should (= 1 1) to be true"
-                  (ok (= 1 1))))
+(ASDF:defsystem "clw/tests"
+  :author ""
+  :license ""
+  :depends-on ("clw"
+               "rove")
+  :components ((:module "tests"
+                        :components
+                        ((:file "main"))))
+  :description "Test system for clw"
+  :perform (asdf:test-op (op c) (funcall (find-symbol "RUN" :rove) c)))
