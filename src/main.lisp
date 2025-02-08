@@ -19,23 +19,24 @@
 </body>
 ")
 
-
-(easy-routes:defroute root ("/" :method :get) ()
-
-                      (djula:render-template*
-                       (djula:compile-string *template-root*)
-                       nil
-                       :products (products)))
-
-(defun start-server (&key (port *port*))
-  (format t "~&Starting the web server on port ~a~&" port)
-  (force-output)
-  (setf *server* (make-instance 'easy-routes:easy-routes-acceptor
-                   :port port))
-  (hunchentoot:start *server*))
-
 (defun products (&optional (n 5))
   (loop for i from 0 below n
         collect (list i
                       (format nil "Product nb ~a" i)
                       9.99)))
+
+(defun render-products ()
+  (djula:render-template*
+   (djula:compile-string *template-root*)
+   nil
+   :products (products)))
+
+(easy-routes:defroute root ("/") ()
+                      (render-products))
+
+(defun start-server (&key (port *port*))
+  (format t "~&Starting the web server on port ~a~&" port)
+  (force-output)
+  (setf *server* (make-instance 'easy-routes:easy-routes-acceptor
+                   :port (or port *port*)))
+  (hunchentoot:start *server*))
