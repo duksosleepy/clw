@@ -24,6 +24,8 @@
 (defparameter *template-product* "
 <body>
      {{ product }}
+
+{% if debug %} debug info! {% endif %}
 </body>
 ")
 
@@ -61,8 +63,10 @@
 (easy-routes:defroute root ("/") ()
                       (render-products))
 
-(easy-routes:defroute product-route ("/product/:n") (&path (n 'integer))
-                      (format nil "parameter is: ~a and is of type: ~a" n (type-of n)))
+(easy-routes:defroute product-route ("/product/:n") (&get debug &path (n 'integer))
+                      (render *template-product*
+                              :product (get-product n)
+                              :debug debug))
 
 (defun start-server (&key (port *port*))
   (format t "~&Starting the web server on port ~a~&" port)
