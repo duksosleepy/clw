@@ -4,7 +4,8 @@
   :license ""
   :depends-on (:hunchentoot
                :easy-routes
-               :djula)
+               :djula
+               :find-port)
   :components ((:module "src"
                         :components
                         ((:file "main"))))

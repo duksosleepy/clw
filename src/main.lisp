@@ -90,6 +90,8 @@
                               :results (search-products (products) query)
                               :query query))
 
+* (easy-routes:defroute hello-route ("/hello") () "hello new route")
+
 (easy-routes:defroute product-route ("/product/:n") (&get debug &path (n 'integer))
                       (render *template-product*
                               :product (get-product n)
@@ -102,3 +104,7 @@
   (setf *server* (make-instance 'easy-routes:easy-routes-acceptor
                    :port (or port *port*)))
   (hunchentoot:start *server*))
+
+(defun main ()
+  (start-server :port (find-port:find-port :min *port*))
+  (sleep most-positive-fixnum))

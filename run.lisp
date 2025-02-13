@@ -2,4 +2,6 @@
 
 (ql:quickload "clw")
 
-(clw::start-server)
+(in-package :clw)
+
+(main)

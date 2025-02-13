@@ -7,4 +7,5 @@
 *.x86f
 *~
 .#*
-.vscode/alive
+/.vscode/alive
+clw
