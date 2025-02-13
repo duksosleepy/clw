@@ -10,7 +10,15 @@
 
 (defparameter *template-root* "
 
-<form action=\"/\" method=\"GET\">
+<html>
+<head>
+  <link
+  rel=\"stylesheet\"
+  href=\"https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css\">
+</head>
+
+<body class=\"container\">
+ <form action=\"/\" method=\"GET\">
   <div>
     <label for=\"query\">What do you search for?</label>
     <input name=\"query\" id=\"query\" placeholder=\"Search…\" />
@@ -31,6 +39,8 @@
   {% endfor %}
 </ul>
 {% endif %}
+</body>
+</html>
 ")
 
 (defparameter *template-product* "
