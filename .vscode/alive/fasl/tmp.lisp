@@ -6,7 +6,10 @@
 (defvar *server* nil
         "Server instance (Hunchentoot acceptor).")
 
-(defparameter *port* 8899 "The application port.")
+(defvar *my-acceptor* (make-instance 'hunchentoot:easy-acceptor :port 4444
+                        :document-root #p"www/"))
+
+(defparameter *port* 4444 "The application port.")
 
 (defparameter *template-root* "
 
@@ -90,20 +93,25 @@
                               :results (search-products (products) query)
                               :query query))
 
-* (easy-routes:defroute hello-route ("/hello") () "hello new route")
+(easy-routes:defroute hello-route ("/hello") () "hello new route")
 
 (easy-routes:defroute product-route ("/product/:n") (&get debug &path (n 'integer))
                       (render *template-product*
                               :product (get-product n)
                               :debug debug))
 
+; (defun start-server (&key (port *port*))
+;   (format t "~&Starting the web server on port ~a~&" port)
+;   (force-output)
+;   (setf *server* (make-instance 'easy-routes:easy-routes-acceptor
+;                    :port (or port *port*)))
+;   (hunchentoot:start *server*))
+
 
 (defun start-server (&key (port *port*))
   (format t "~&Starting the web server on port ~a~&" port)
   (force-output)
-  (setf *server* (make-instance 'easy-routes:easy-routes-acceptor
-                   :port (or port *port*)))
-  (hunchentoot:start *server*))
+  (hunchentoot:start *my-acceptor*))
 
 (defun main ()
   (start-server :port (find-port:find-port :min *port*))
