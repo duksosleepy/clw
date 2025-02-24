@@ -1,15 +1,12 @@
 (uiop:define-package clw
-  (:use #:cl)
+  (:use #:cl
+        #:hunchentoot)
   (:export :start-server))
 (in-package #:clw)
 
-(defvar *server* nil
-        "Server instance (Hunchentoot acceptor).")
-
-(defvar *my-acceptor* (make-instance 'hunchentoot:easy-acceptor :port 4444
-                        :document-root #p"www/"))
 
 (defparameter *port* 4444 "The application port.")
+
 
 (defparameter *template-root* "
 
@@ -88,6 +85,7 @@
     nil
     args))
 
+
 (easy-routes:defroute root ("/") (query)
                       (render *template-root*
                               :results (search-products (products) query)
@@ -100,18 +98,22 @@
                               :product (get-product n)
                               :debug debug))
 
-; (defun start-server (&key (port *port*))
-;   (format t "~&Starting the web server on port ~a~&" port)
-;   (force-output)
-;   (setf *server* (make-instance 'easy-routes:easy-routes-acceptor
-;                    :port (or port *port*)))
-;   (hunchentoot:start *server*))
-
+(defun serve-static-assets ()
+  "Then reference static assets with the /static/ URL prefix."
+  (push (hunchentoot:create-folder-dispatcher-and-handler
+         "/static/"
+         (asdf:system-relative-pathname :clw "src/static/"))
+        ;;                                        ^^^ starts without a /
+        hunchentoot:*dispatch-table*))
 
 (defun start-server (&key (port *port*))
   (format t "~&Starting the web server on port ~a~&" port)
   (force-output)
-  (hunchentoot:start *my-acceptor*))
+  (setf *server* (make-instance 'easy-routes:easy-routes-acceptor
+                   :port (or *port* 4444)
+                   :document-root #p"www/"))
+  (serve-static-assets)
+  (hunchentoot:start *server*))
 
 (defun main ()
   (start-server :port (find-port:find-port :min *port*))
